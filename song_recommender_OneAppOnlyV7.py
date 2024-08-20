@@ -114,7 +114,7 @@ if submitted:
     my_bar = st.progress(0, text=progress_text)
 
     for percent_complete in range(100):
-        time.sleep(0.01)
+        time.sleep(0.02)
         my_bar.progress(percent_complete + 1, text=progress_text)
     
     distances, indices = song_recommender(track_data=track_data, 
@@ -124,7 +124,7 @@ if submitted:
     recommend_songs = get_recommended_songs(indices)
     st.write(f'Top {st.session_state.no_neighbors} Recommended Songs by Segment', recommend_songs.sample(n=st.session_state.no_neighbors).sort_index()) 
      
-    time.sleep(5)
+    time.sleep(1)
     my_bar.empty()
 
 else:
