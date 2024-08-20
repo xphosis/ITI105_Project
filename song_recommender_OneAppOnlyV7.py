@@ -1,8 +1,11 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-import pickle
+# import pickle
 import time
+# from thefuzz import fuzz
+from thefuzz import process
+from sklearn.neighbors import NearestNeighbors
 
 @st.cache_data()
 
@@ -41,7 +44,7 @@ def get_track_info(track_data, selected_song_index):
 
 
 def get_neighbors_by_segment(selected_songs_by_segment, selected_song_input, no_neighbors=10):
-    from sklearn.neighbors import NearestNeighbors
+    
         
     nneigh = NearestNeighbors(n_jobs=-1, leaf_size=30, metric='manhattan', algorithm = 'kd_tree', p=1, radius=1.6)
     nneigh.fit(X=selected_songs_by_segment)
@@ -56,8 +59,7 @@ def get_neighbors_by_segment(selected_songs_by_segment, selected_song_input, no_
 
 
 def song_recommender(track_data, user_input=None, no_neighbors=10):
-    from thefuzz import fuzz
-    from thefuzz import process
+
 
     INPUT_FEATURES, TRAIN_FEATURES, TRACK_SUMMARY = get_features_info()
     select_song_index= process.extractOne(user_input, track_data.song)[2]
