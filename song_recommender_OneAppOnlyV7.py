@@ -11,7 +11,8 @@ from sklearn.neighbors import NearestNeighbors
 
 def get_track_data():
 
-    track_data =pd.read_pickle('track_data_KMeansNearestNeighbors.pkl')
+    # track_data =pd.read_pickle('track_data_KMeansNearestNeighbors.pkl')
+    track_data = pd.read_csv('track_data_KMeansNearestNeighbors.csv')
     return track_data
 
 
@@ -124,7 +125,11 @@ if submitted:
                                 no_neighbors=st.session_state.no_neighbors
                                 )
     recommend_songs = get_recommended_songs(indices)
-    st.write(f'Top {st.session_state.no_neighbors} Recommended Songs by Segment', recommend_songs.sample(n=st.session_state.no_neighbors).sort_index()) 
+    st.write(f'Song Selected by User :  {recommend_songs.iloc[0].song_name}') 
+    st.write(f'Top {st.session_state.no_neighbors} Recommended Songs by Segment') 
+    st.dataframe(recommend_songs.sample(n=st.session_state.no_neighbors).sort_index(), use_container_width=True, hide_index=True)
+
+    hide_index=True,
      
     time.sleep(1)
     my_bar.empty()
