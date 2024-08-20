@@ -13,13 +13,21 @@ def get_track_data():
 
 
 def get_features_info():
-    INPUT_FEATURES = ['id','song', 'artists', 'genres', 'year', 'duration_ms', 'explicit', 'popularity', 'danceability',
-                'energy', 'key', 'loudness', 'mode', 'speechiness', 'acousticness',
-                'instrumentalness', 'liveness', 'valence', 'tempo', 'segment']
+    INPUT_FEATURES = ['id','song', 'artists', 'genres', 'year', 'explicit', 'popularity', 'danceability',
+                'energy', 'loudness', 'speechiness', 'acousticness',
+                'instrumentalness',  'valence', 'segment']
     
-    TRAIN_FEATURES = ['duration_ms', 'explicit', 'popularity', 'danceability',
-            'energy', 'key', 'loudness', 'mode', 'speechiness', 'acousticness',
-            'instrumentalness', 'liveness', 'valence', 'tempo']
+    TRAIN_FEATURES = ['explicit', 'popularity', 'danceability',
+            'energy', 'loudness', 'speechiness', 'acousticness',
+            'instrumentalness', 'valence']
+    
+    # INPUT_FEATURES = ['id','song', 'artists', 'genres', 'year', 'duration_ms', 'explicit', 'popularity', 'danceability',
+    #             'energy', 'key', 'loudness', 'mode', 'speechiness', 'acousticness',
+    #             'instrumentalness', 'liveness', 'valence', 'tempo', 'segment']
+    
+    # TRAIN_FEATURES = ['duration_ms', 'explicit', 'popularity', 'danceability',
+    #         'energy', 'key', 'loudness', 'mode', 'speechiness', 'acousticness',
+    #         'instrumentalness', 'liveness', 'valence', 'tempo']
 
     TRACK_SUMMARY = ['id','song', 'artists', 'genres', 'year', 'segment']
     return INPUT_FEATURES,TRAIN_FEATURES, TRACK_SUMMARY
@@ -73,8 +81,6 @@ def get_recommended_songs(indices):
                         'song_year':[],
                         'song_id': []}
     for idx in indices:
-    # for i in range(len(df_idx)):
-        # idx = df_idx[i:i+1].values[0]
         track_info = get_track_info(track_data=track_data, selected_song_index=idx)
         recommend_songs_list['song_id'].append(track_info['id'])
         recommend_songs_list['song_name'].append(track_info['song'])
@@ -116,9 +122,9 @@ if submitted:
                                 no_neighbors=st.session_state.no_neighbors
                                 )
     recommend_songs = get_recommended_songs(indices)
-    st.write(f'Top {st.session_state.user_input} Recommended Songs by Segment', recommend_songs.sample(n=st.session_state.no_neighbors).sort_index()) 
-
-    time.sleep(1)
+    st.write(f'Top {st.session_state.no_neighbors} Recommended Songs by Segment', recommend_songs.sample(n=st.session_state.no_neighbors).sort_index()) 
+     
+    time.sleep(5)
     my_bar.empty()
 
 else:
